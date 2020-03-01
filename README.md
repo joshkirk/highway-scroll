@@ -1,12 +1,10 @@
-##### [Sandbox](https://highway-scroll.joshkirk.dev/)
+#### [WIP Sandbox](https://highway-scroll.joshkirk.dev/)
 
 ## Localhost Setup
 1. From the project root in terminal, run NPM install
 2. To start the project now, setup your watch: `npm run watch-dev` or `npm run watch` to minimize for prod builds
 3. In the terminal, navigate to `web/site` and then type `php -S localhost:8000` to start your virtual server, 
 or point MAMP to the `web/site` directory
-
-
 
 ## Core performance principles
 
@@ -24,7 +22,6 @@ checked/set (use flags).
 plus not waiting for all images to do so, it's critical that all images somehow have a height in the CSS. Consider using an `.ar-wrapper` container to set the aspect ratio with padding bottom
 and positioning the media absolutely within.
 
-
 ## PJAX specifics
 
 1. Pacing is everything. It's not about what is actually happening, it's about what the user perceives to be happening. With highway we have total freedom during transitions & page renderers to pace things as needed.
@@ -33,7 +30,7 @@ update the namespace, check measurement values, etc.
 3. Know when certain aspects of your transitions are complete by modifying the above mentioned globalStorage values. This helps greatly with the pacing. Notice the setInterval 
 in the critical images callback in the global renderer.
 
-#### Advanced uses
+### Advanced uses
 1. By adding contextual transitions when instantiating highway in `/js/routing.js`, you can place `data-transition="transitionName"` to an anchor tag to use custom transitions on the fly.
 The contextual transitions can also be used when calling a redirect programmatically, ie, `H.redirect(fullHref, transitionName)`
 2. Often times contextual transitions are used in conjunction with a strategy called "overlapping transitions", whereby you strategically call `from.remove()` in the transition when you know
@@ -42,14 +39,14 @@ to the header of the next might have identical elements. By using a contextual t
 you can make those identical elements appear to have never changed when in reality they were replaced by the new elements.
 
 ## Scroll based anims class specifics
-#### (See comments in file)
+### (See comments in file)
 1. The scroll based animations file can be set with a flag to use either virtual scroll or the native window scrollY value. Regardless, mobile and Firefox use the native scrollY value.
 2. There are more advanced usages, but basically the pattern will always be the same. Create a data collection function that gets bounding data, call it in `getCache()`, then create an 
 animation function that animates against that data and call it in the `run()` function.
 3. If you want to use native scroll, you'll have to set some body styles accordingly. See `/css/_critical/init.scss`. the `data-smooth` attributes on the page sections won't do anything if 
 `this.isVS` is set to false.
  
-#### Advanced uses
+### Advanced uses
 With the data available regardless of device, there's really nothing you can't do with the `ScrollBasedAnims` class. 
 1. As you'll see with the hero and footer element animations, I like to use what I refer to as a measure elements (`.measure-el`). When nested inside of a section we want to animate 
 and given a certain height & top positioning, these can be used to pan through more complicated timelines (what I sometimes refer to as scenes). The scene might be more complicated and the timeline created 
