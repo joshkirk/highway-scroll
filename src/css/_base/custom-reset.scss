@@ -1,0 +1,68 @@
+/* Main Scrollbar */
+::-webkit-scrollbar {
+	width: 0;
+}
+
+::-webkit-scrollbar-button{
+
+}
+
+::-webkit-scrollbar-track{
+
+}
+
+::-webkit-scrollbar-track-piece{
+
+}
+
+::-webkit-scrollbar-thumb{
+
+}
+
+::-webkit-scrollbar-corner{
+
+}
+
+::-webkit-resizer{
+
+}
+
+h1,h2,h3,h4,h5,h5 {
+  margin: 0;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style-type: none;
+}
+button,
+input,
+textarea,
+select {
+  -webkit-appearance: none;
+  outline: none;
+  border-radius: 0;
+  background-color: transparent;
+}
+input, textarea {
+  background: transparent;
+  border: none;
+
+}
+body {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+p {
+  margin: 0;
+  a {
+    text-decoration: underline;
+  }
+}

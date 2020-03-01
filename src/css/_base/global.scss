@@ -1,0 +1,121 @@
+svg, img {
+    height: 100%;
+    display: block;
+}
+video {
+    object-fit: cover;
+    object-position: center;
+}
+.ar-wrapper {
+    width: 100%;
+    position: relative;
+    height: 0;
+    padding-bottom: 100%;
+}
+.bg {
+    background-size: cover;
+    background-position: center;
+}
+.btn {
+    cursor: pointer;
+    width: 225px;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+}
+.measure-el {
+    position: absolute;
+    width: 1px;
+    right: 0;
+}
+.container-120 {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 120px;
+    display: flex;
+    align-items: center;
+    @include bp-1200 {
+        padding: 0 80px;
+    }
+    @include bp-959 {
+        padding: 0 40px;
+    }
+    @include bp-767 {
+        padding: 0 30px;
+        .left, .right {
+            width: 100%;
+        }
+    }
+    @include bp-370 {
+        padding: 0 20px;
+    }
+}
+.container-90 {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 90px;
+    display: flex;
+    align-items: center;
+    @include bp-1200 {
+        padding: 0 70px;
+    }
+    @include bp-959 {
+        padding: 0 40px;
+    }
+    @include bp-767 {
+        padding: 0 30px;
+        .left, .right {
+            width: 100%;
+        }
+    }
+    @include bp-370 {
+        padding: 0 20px;
+    }
+}
+.cml-120 {
+    margin-left: 120px;
+    @include bp-1200 {
+        margin-left: 80px;
+    }
+    @include bp-959 {
+        margin-left: 40px;
+    }
+    @include bp-767 {
+        margin-left: 30px;
+    }
+    @include bp-370 {
+        margin-left: 20px;
+    }
+}
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+.hero {
+    .measure-el {
+        height: 55%;
+        top: 0;
+        @include bp-767 {
+            height: 80%;
+        }
+    }
+}
+section {
+    position: relative;
+    z-index: 2;
+}
+
+// TOUCH DEVICE STYLES...
+// THINGS ARE GONNA GET PRETTY SPECIFIC HERE
+body {
+    &.touch {
+
+    }
+}

@@ -1,0 +1,10 @@
+#mini-cart {
+    position: fixed;
+    background: #FFFFFF;
+    width: 40%;
+    height: calc(var(--vh, 1vh) * 100);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    display: none;
+}

@@ -1,0 +1,71 @@
+/*
+	This file is to store the minimum css needed to
+	render the page upon first load.
+
+	The DOM file load order will look like:
+
+	_fonts.css
+	_init.css
+	main.js
+	main.css
+
+-------------------------------------------------- */
+@import "../_abstracts/variables";
+
+/* 	Init CSS
+-------------------------------------------------- */
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+html a {
+	-webkit-font-smoothing: antialiased !important;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+// NATIVE SCROLL BODY STYLES
+//html,
+//body {
+//	width: 100%;
+//	overflow-x: hidden;
+//	overflow-y: auto;
+//	&.touch {
+//
+//	}
+//	&.locked {
+//		overflow-y: hidden;
+//	}
+//}
+
+// VS STYLES.. IF USING NATIVE SCROLL COMMENT THIS BLOCK OUT AND UNCOMMENT THE ABOVE BLOCK
+html,
+body {
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+	max-height: 100%;
+	overflow: hidden;
+	&.touch {
+		height: auto;
+		max-height: none;
+		min-height: 0;
+		overflow: auto;
+	}
+	&.locked {
+		overflow-y: hidden;
+	}
+}
+#main {
+
+}
+#global-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: $white;
+	z-index: 99;
+}

@@ -1,0 +1,63 @@
+/* ------------------------------------------------------------------ */
+/*      MIXINS
+
+        - Global mixins used across the site
+/* ------------------------------------------------------------------ */
+
+/* ----- MEDIA QUERIES ----- */
+@mixin bp-320 {
+	@media screen and (max-width: 320px) {
+		@content;
+	}
+}
+@mixin bp-370 {
+	@media screen and (max-width: 370px) {
+		@content;
+	}
+}
+@mixin bp-480 {
+	@media screen and (max-width: 480px) {
+		@content;
+	}
+}
+@mixin bp-767 {
+	@media screen and (max-width: 767px) {
+		@content;
+	}
+}
+@mixin bp-959 {
+	@media screen and (max-width: 959px) {
+		@content;
+	}
+}
+@mixin bp-1024 {
+	@media screen and (max-width: 1024px) {
+		@content;
+	}
+}
+@mixin bp-1200 {
+	@media screen and (max-width: 1200px) {
+		@content;
+	}
+}
+@mixin bp-1440 {
+	@media screen and (max-width: 1440px) {
+		@content;
+	}
+}
+@mixin bp-1680 {
+	@media screen and (max-width: 1680px) {
+		@content;
+	}
+}
+@mixin bp-1920 {
+	@media screen and (max-width: 1920px) {
+		@content;
+	}
+}
+
+/* ----- SIZE ----- */
+@function get-vw($target) {
+	$vw-context: (1440 * 0.01) * 1px;
+	@return ($target / $vw-context) * 1vw;
+}

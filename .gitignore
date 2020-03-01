@@ -1,0 +1,41 @@
+!.gitignore
+
+# Application
+web/config.php
+!web/config.*.php
+!web/cache/
+web/cache/*
+web/app/views/*
+web/site/*
+!web/site/server
+!web/site/index.php
+!web/site/.htaccess
+!web/site/robots.txt
+
+# Dotenv
+!.env
+.env.*
+!.env.example
+
+# Vendor (e.g. Composer)
+web/vendor/*
+
+# Compiled
+compiled
+
+# Node Package Manager
+node_modules
+
+# Vagrant
+bin
+.vagrant
+
+.idea/
+composer.phar
+composer.lock
+package.lock
+npm-debug.log
+cdnkey.json
+
+# Stray Files
+.DS_Store

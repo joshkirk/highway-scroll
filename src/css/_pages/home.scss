@@ -1,0 +1,67 @@
+/*
+    HOME PAGE STYLES
+
+    - Import all home page specific styles here
+-------------------------------------------------- */
+#scroll-progress {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 15px;
+  width: 100%;
+  z-index: 4;
+  .track {
+    width: 100%;
+    height: 100%;
+    background-color: #EBEBEB;
+  }
+  .indicator {
+    width: 100%;
+    height: 100%;
+    background-color: #3f7647;
+    position: absolute;
+    top: 0;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+  }
+}
+
+.view-home {
+  section {
+    height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+    h1 {
+      font-size: 180px;
+      font-family: sans-serif;
+      color: #000000;
+      text-transform: uppercase;
+      white-space: nowrap;
+      position: absolute;
+      left: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .img-wrapper {
+      width: 70%;
+      position: relative;
+    }
+    img {
+      width: auto;
+      height: 300px;
+      z-index: 2;
+    }
+  }
+  .scale-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: 50% 100%;
+  }
+}

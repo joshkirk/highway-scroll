@@ -1,0 +1,25 @@
+#footer {
+    background-color: #3f7647;
+    height: 400px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    h5 {
+        font-size: 100px;
+        font-family: sans-serif;
+        color: #000000;
+        text-transform: uppercase;
+        white-space: nowrap;
+        z-index: 3;
+        margin-top: 60px;
+        pointer-events: none;
+    }
+    .measure-el {
+        height: 100%;
+        top: 0;
+    }
+}
+.footer-inner {
+    display: flex;
+    justify-content: center;
+}

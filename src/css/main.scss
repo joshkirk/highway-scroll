@@ -1,0 +1,37 @@
+/*
+	ABSTRACTS
+
+-------------------------------------------------- */
+@import "/_abstracts/variables";
+@import "/_abstracts/mixins";
+
+/*
+	BASE
+
+-------------------------------------------------- */
+@import "/_base/custom-reset";
+@import "/_base/global";
+
+
+/*
+	PAGES / LOCAL TEMPLATES
+
+-------------------------------------------------- */
+@import "/_pages/home";
+@import "/_pages/about";
+@import "/_pages/404";
+
+
+/*
+	GLOBAL COMPONENTS
+
+-------------------------------------------------- */
+@import "_global-components/header";
+@import "_global-components/footer";
+@import "_global-components/mini-cart";
+
+/*
+	PLUGINS
+
+	- Third party plugins
+-------------------------------------------------- */
