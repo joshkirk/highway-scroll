@@ -16,7 +16,10 @@ export const H = new Highway.Core({
 		home: HomeRenderer
 	},
 	transitions: {
-		default: BasicFade
+		default: BasicFade,
+		contextual: {
+			// fromMenu: FooterToHero
+		}
 	}
 });
 
