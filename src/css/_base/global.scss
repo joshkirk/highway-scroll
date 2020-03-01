@@ -97,7 +97,12 @@ video {
     display: none !important;
     visibility: hidden;
 }
-
+main {
+    display: block;
+}
+.view {
+    width: 100%;
+}
 .hero {
     .measure-el {
         height: 55%;

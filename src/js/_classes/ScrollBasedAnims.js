@@ -252,24 +252,6 @@ export class ScrollBasedAnims {
 
   }
 
-  bringInScrollBasedSections() {
-    if (this.thisPagesTLs.length !== this.offsetVal) {
-
-      let length = this.scrollBasedElems.length;
-      for (let i = 0; i < length; i++) {
-        let data = this.scrollBasedElems[i]
-
-        if (data.played) { continue }
-
-        if ((this.data.current + data.offset) > data.top) {
-          this.thisPagesTLs[this.offsetVal].progress(1);
-          this.offsetVal++;
-          data.played = true;
-        }
-      }
-    }
-  }
-
   getDataFromElems() {
     if (!this.dom.dataFromElems) return;
 
@@ -432,7 +414,7 @@ export class ScrollBasedAnims {
     for (let i = 0; i < length; i++) {
       let data = this.dataFromElems[i]
 
-      const { isVisible, start, end } = this.isVisible(data, 50);
+      const { isVisible, start, end } = this.isVisible(data, 0.01);
 
       if (isVisible) {
 
@@ -502,6 +484,7 @@ export class ScrollBasedAnims {
     this.getHeroMeasureEl();
     this.getFooterMeasureEl();
     this.getScrollProgressData();
+    console.log(this.data)
   }
 
   getScrollProgressData() {

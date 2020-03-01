@@ -40,7 +40,11 @@ html a {
 //}
 
 // VS STYLES.. IF USING NATIVE SCROLL COMMENT THIS BLOCK OUT AND UNCOMMENT THE ABOVE BLOCK
-html,
+html {
+	width: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
 body {
 	width: 100%;
 	height: 100%;
@@ -67,5 +71,5 @@ body {
 	width: 100%;
 	height: 100%;
 	background-color: $white;
-	z-index: 99;
+	z-index: 100;
 }

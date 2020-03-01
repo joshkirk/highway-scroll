@@ -1,6 +1,6 @@
 <?php include( "header.php"); ?>
 
-  <div class="view-about" data-router-view="about">
+  <div class="view view-about" data-router-view="about">
   <section class="hero" style="background-color: #FF7F50;" data-smooth>
     <div class="measure-el"></div>
     <h1 data-h-from="{&quot;xPercent&quot;: &quot;3&quot;, &quot;opacity&quot;: &quot;1&quot;}"
