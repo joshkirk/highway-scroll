@@ -3,7 +3,6 @@
 # Application
 web/config.php
 !web/config.*.php
-!web/cache/
 web/cache/*
 web/app/views/*
 web/site/*
@@ -35,7 +34,6 @@ composer.phar
 composer.lock
 package.lock
 npm-debug.log
-cdnkey.json
 
 # Stray Files
 .DS_Store
