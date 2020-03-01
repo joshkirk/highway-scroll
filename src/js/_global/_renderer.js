@@ -69,6 +69,7 @@ export const onReady = ()=>{
 	let vh = getViewport().height * 0.01;
 
 	document.body.style.setProperty('--vh', `${vh}px`);
+	document.body.style.setProperty('--vhu', `${vh}px`);
 
 	globalEvents();
 };
@@ -86,7 +87,7 @@ export const onResize = ()=>{
 
 	let vh = globalStorage.windowHeight * 0.01;
 
-	document.body.style.setProperty('--vh', `${vh}px`);
+	document.body.style.setProperty('--vhu', `${vh}px`);
 
 	$scroll.resize();
 };

@@ -40,25 +40,28 @@ html a {
 //}
 
 // VS STYLES.. IF USING NATIVE SCROLL COMMENT THIS BLOCK OUT AND UNCOMMENT THE ABOVE BLOCK
-html {
-	width: 100%;
-	overflow-x: hidden;
-	overflow-y: auto;
-}
 body {
 	width: 100%;
 	height: 100%;
 	min-height: 100%;
 	max-height: 100%;
 	overflow: hidden;
-	&.touch {
-		height: auto;
-		max-height: none;
-		min-height: 0;
-		overflow: auto;
-	}
 	&.locked {
 		overflow-y: hidden;
+	}
+}
+html {
+	width: 100%;
+	&.touch {
+		overflow-x: hidden;
+		overflow-y: auto;
+		body {
+			height: auto;
+			max-height: none;
+			min-height: 0;
+			overflow-x: hidden;
+			overflow-y: auto;
+		}
 	}
 }
 #main {

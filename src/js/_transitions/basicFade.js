@@ -1,6 +1,7 @@
 import Highway from "@dogstudio/highway";
 import { gsap, Sine } from "gsap";
 import { globalStorage } from "../_global/storage";
+import {$scroll} from "../_global/_renderer";
 
 let globalMask = document.getElementById("global-mask");
 
@@ -18,15 +19,14 @@ class BasicFade extends Highway.Transition{
 
 		globalStorage.namespace = to.dataset.routerView;
 
-		// Move to top of page
-		if(globalStorage.isMobile === true){
-			document.getElementById("main").scrollTo(0, 0);
-		} else {
-			window.scrollTo(0, 0);
-		}
-
 		// Remove old view
 		from.remove();
+
+		if (globalStorage.isMobile) {
+			// Move to top of page
+			document.body.scrollTop = 0;
+			window.scroll(0,0);
+		}
 
 		globalStorage.transitionFinished = true;
 

@@ -17,6 +17,9 @@
             left: 0;
             z-index: 3;
             pointer-events: none;
+            @include bp-767 {
+                color: #ffffff;
+            }
         }
         .img-wrapper {
             width: 70%;

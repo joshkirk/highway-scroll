@@ -71,6 +71,7 @@ export class ScrollBasedAnims {
       last: 0,
       target: 0,
       height: 0,
+      width: globalStorage.windowWidth,
       max: 0
     };
 
@@ -312,7 +313,7 @@ export class ScrollBasedAnims {
   }
 
   getFooterMeasureEl() {
-    if (!this.dom.footerMeasureEl) return;
+    if (!this.dom.footerMeasureEl || this.isMobile) return;
     const el = this.dom.footerMeasureEl;
     const bounds = el.getBoundingClientRect();
     this.footerRevealTL = new gsap.timeline({ paused: true })
@@ -391,7 +392,7 @@ export class ScrollBasedAnims {
   }
 
   animateFooterReveal() {
-    if (this.direction === "untouched" || !this.dom.footerMeasureEl) return;
+    if (this.direction === "untouched" || !this.footerMeasureData) return;
     const { isVisible, start, end } = ( this.isVisible(this.footerMeasureData, 0.01) );
     if (!isVisible) {
       this.footerRevealTL.progress(0);

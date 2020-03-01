@@ -23,7 +23,7 @@ const isMobile = require("ismobilejs");
 globalStorage.isMobile = isMobile.any;
 
 if (globalStorage.isMobile) {
-	document.body.classList.add('touch')
+	document.documentElement.classList.add('touch');
 }
 
 /*
