@@ -39,6 +39,9 @@ to the header of the next might have identical elements. By using a contextual t
 you can make those identical elements appear to have never changed when in reality they were replaced by the new elements.
 
 ## Scroll based anims class specifics
+
+#### Shout out to [Jesper Landberg](https://twitter.com/Jesper_Landberg) whose original scroll class logic guided and inspired this development
+
 ### (See comments in file)
 1. The scroll based animations file can be set with a flag to use either virtual scroll or the native window scrollY value. Regardless, mobile and Firefox use the native scrollY value.
 2. There are more advanced usages, but basically the pattern will always be the same. Create a data collection function that gets bounding data, call it in `getCache()`, then create an 
