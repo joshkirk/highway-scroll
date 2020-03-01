@@ -33,7 +33,7 @@ const globalEvents = (namespace = null)=>{
 	 *	go within it's respective file.
 	 */
 	ImageLoad.loadImages("preload-critical", type, ()=>{
-		console.log('critical done')
+
 		/* --- Critical Done --- */
 		globalEntrance(()=>{
 
@@ -42,16 +42,11 @@ const globalEvents = (namespace = null)=>{
 		});
 
 		let transitionFinished = setInterval(()=>{
-
 			if(globalStorage.transitionFinished === true){
-
 				clearInterval(transitionFinished);
-
 				$scroll = new ScrollBasedAnims({});
-
 				pageEntrance(namespace);
 			}
-
 		}, 20);
 
 		/*
