@@ -57,3 +57,12 @@ and never swapping css position value from fixed to unfixed which can cause jump
 place a measure element (remember `.measure-el`) and as that element enters the viewport, transform the fixed position element up and out of view. See [this page](https://plenaire.co/products/remedy/), the `.measure-el` 
 at the bottom of the `.right-content` in the first part of that page. I actually had to nudge that with JS because the left side collapses, but the point is as the measure element enters, the fixed element will scroll up
 out of view and back down when scrolling up.
+
+### Sites that have been made with this overall strategy/code:
+1. [Robin Golf](https://robingolf.com/)
+2. [DNC 2020 visual identity](https://d20.demconvention.com/) `all native scroll`
+3. [Plenaire skincare](https://plenaire.co/)
+4. [Atom finance](https://atom.joshkirk.dev/)
+4. [Zero birthday site](https://two.zero.nyc/)
+
+Many many more, from winding scroll paths that reach eventual product callouts, to completely horizontal implementations, etc. 
