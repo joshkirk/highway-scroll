@@ -1,6 +1,6 @@
 .view-about {
     section {
-        height: calc(var(--vh, 1vh) * 100);
+        height: calc(var(--vhu, 1vh) * 100);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -19,6 +19,7 @@
             pointer-events: none;
             @include bp-767 {
                 color: #ffffff;
+                font-size: 50px;
             }
         }
         .img-wrapper {

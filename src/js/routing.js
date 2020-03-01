@@ -1,29 +1,31 @@
-/*  
+/*
     Load Plugins / Functions
 -------------------------------------------------- */
 import Highway from "@dogstudio/highway";
 import { onLeave, onEnter, onEnterCompleted } from "./_global/_renderer";
 /* --- Highway Renderers --- */
 import HomeRenderer from "./home/_renderer";
+import AboutRenderer from "./about/_renderer";
 /* --- Highway Transitions --- */
 import BasicFade from "./_transitions/basicFade";
 
-/*  
+/*
     Setup Core
 -------------------------------------------------- */
 export const H = new Highway.Core({
 	renderers: {
-		home: HomeRenderer
+		home: HomeRenderer,
+		about: AboutRenderer
 	},
 	transitions: {
 		default: BasicFade,
-		contextual: {
-			// fromMenu: FooterToHero
+		contextual: { // Add transitions here that you can use by placing data-transition on an anchor, or in an H.redirect(href, transition)
+			// footerToHero: FooterToHero
 		}
 	}
 });
 
-/*  
+/*
     Global Events
 -------------------------------------------------- */
 H.on("NAVIGATE_OUT", ({ from, trigger, location })=>{

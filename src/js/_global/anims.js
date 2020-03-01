@@ -5,7 +5,7 @@ import { $scroll } from "../_global/_renderer"
 /*
 	Page specific animations
 -------------------------------------------------- */
-export const pageEntrance = (namespace = null)=>{
+export const pageEntrance = (namespace)=>{
 
 	/* ----- Establish our timeline ----- */
 	let timeline = new gsap.timeline({ paused: true });

@@ -38,7 +38,7 @@ const globalEvents = (namespace = null)=>{
 		globalEntrance(()=>{
 
 			/* --- Global Entrance is done --- */
-			
+
 		});
 
 		let transitionFinished = setInterval(()=>{
@@ -49,12 +49,6 @@ const globalEvents = (namespace = null)=>{
 			}
 		}, 20);
 
-		/*
-		 *	Load Remaining Images
-		 *
-		 *	If you have any Image measurement dependent global scripts
-		 *	put them within this function's callback
-		 */
 		ImageLoad.loadImages("preload", type, ()=>{
 
 			/* --- All Images Done --- */
@@ -65,13 +59,13 @@ const globalEvents = (namespace = null)=>{
 
 /* --- DOMContentLoaded Function --- */
 export const onReady = ()=>{
-
+	let namespace = document.querySelector('[data-router-view]').dataset.routerView;
 	let vh = getViewport().height * 0.01;
 
 	document.body.style.setProperty('--vh', `${vh}px`);
-	document.body.style.setProperty('--vhu', `${vh}px`);
+	document.body.style.setProperty('--vhu', `${vh}px`); // viewport height updated
 
-	globalEvents();
+	globalEvents(namespace);
 };
 
 /* --- window.onload Function --- */
@@ -117,7 +111,7 @@ export const onLeave = (from, trigger, location)=>{
  *	are still loaded into the DOM during this callback.
  */
 export const onEnter = (to, trigger, location)=>{
-
+	globalEvents(to.view.dataset.routerView);
 };
 
 /*
@@ -128,9 +122,6 @@ export const onEnter = (to, trigger, location)=>{
  *	event fires.
  */
 export const onEnterCompleted = (from, to, trigger, location)=>{
-
-	/* --- This needs to stay here --- */
-	globalEvents(to.view.dataset.routerView);
 
 	/* --- Track Page Views through Ajax --- */
 	tracking("google", "set", "page", location.pathname);

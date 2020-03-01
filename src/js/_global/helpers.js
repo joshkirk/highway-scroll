@@ -2,15 +2,15 @@ import * as cookies from "js-cookie";
 import * as serialize from "form-serialize";
 import { globalStorage } from "./storage";
 /*
- 	Store any predefined global functions in here, 
+ 	Store any predefined global functions in here,
 	useful for rewriting your favorite jquery function
 	into a vanilla JS function.
-	
+
 -------------------------------------------------- */
 
 /*
  	Has Class
-	
+
 	Returns true/false if element has classname.
 -------------------------------------------------- */
 export const hasClass = (element, cls)=>{
@@ -21,12 +21,12 @@ export const hasClass = (element, cls)=>{
  	Error Catching
 -------------------------------------------------- */
 export const tryCatch = ()=>{
-	
+
 };
 
 /*
  	Vanilla .eq()
-	
+
 	Returns element by index.
 
 	Usage: eq.call(arrayOfElements, index);
@@ -47,7 +47,7 @@ export const remove = (array, element)=>{
 };
 
 /*
- 	Parse Query String to Object	
+ 	Parse Query String to Object
 -------------------------------------------------- */
 export const parseQueryString = ()=>{
 
@@ -63,7 +63,7 @@ export const parseQueryString = ()=>{
 };
 
 /*
- 	Form Validation	
+ 	Form Validation
 -------------------------------------------------- */
 const formValidation = (form)=>{
 
@@ -162,7 +162,7 @@ const clearError = (elem)=>{
 	let placeholder = elem.getAttribute("placeholder");
 
 	if(label.tagName.toLowerCase() == "label"){
-		
+
 		label.textContent = placeholder;
 		label.classList.remove("error");
 	}
@@ -183,7 +183,7 @@ const errorHandle = (elem, msg)=>{
 		label.textContent = msg;
 		label.className += " error";
 	}
-	
+
 	elem.className += " error";
 };
 
@@ -232,7 +232,7 @@ export const bindForm = (form, validation = false, url = null, callback = null)=
 	}
 };
 
-/*  
+/*
 	Ajax Request with Callback
 
     makes an ajax call
@@ -256,7 +256,7 @@ export const ajax = (methodType, url, type, data = null, callback = null, header
 			xhr.setRequestHeader(header[0], header[1]);
 		});
     }
-    
+
     xhr.send(data);
 
     xhr.onreadystatechange = ()=>{
@@ -270,7 +270,7 @@ export const ajax = (methodType, url, type, data = null, callback = null, header
     };
 };
 
-/* 	
+/*
 	Sanitize A Tags
 
 	Check to make sure A tags aren't forcing a refresh
@@ -301,7 +301,7 @@ export const sanitizeLinks = ()=>{
 	});
 };
 
-/* 	
+/*
 	Get Viewport
 
 	returns the native height and width of the
@@ -317,9 +317,9 @@ export const getViewport = function(){
 };
 
 
-/* 	
+/*
 	Storefront Checkout Url reformatter
-	
+
 -------------------------------------------------- */
 export const reformatCheckoutUrl = (url)=>{
 
@@ -332,7 +332,7 @@ export const reformatCheckoutUrl = (url)=>{
 	if(globalStorage.queryParams && Object.keys(globalStorage.queryParams).length > 0){
 
 		Object.keys(globalStorage.queryParams).forEach((key, i)=>{
-			
+
 			if(checkoutUrl.indexOf("?")){
 				checkoutUrl = checkoutUrl + "&" + key + "=" + globalStorage.queryParams[key];
 			} else {
@@ -368,14 +368,14 @@ export const reformatCheckoutUrl = (url)=>{
 	return checkoutUrl;
 };
 
-/* 	
+/*
 	Analytics Helpers
-	
+
 -------------------------------------------------- */
 /* global fbq analytics ga */
 export const tracking = (type, var1 = null, var2 = null, var3 = null, var4 = null)=>{
 
-	// console.log(type, var1, var2, var3); 
+	// console.log(type, var1, var2, var3);
 
 	switch(type){
 		case "facebook":
@@ -433,7 +433,7 @@ export const tracking = (type, var1 = null, var2 = null, var3 = null, var4 = nul
 
 			if(typeof ga === "undefined"){
 				// GA not initialized
-				console.log("GA not initialized");
+				// console.log("GA not initialized");
 			} else {
 
 				if(var3){

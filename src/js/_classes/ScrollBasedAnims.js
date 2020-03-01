@@ -4,44 +4,45 @@ import { globalStorage, domStorage } from "../_global/storage";
 
 export class ScrollBasedAnims {
   constructor(options = {}) {
-    this.isVS = true;
+    this.isVS = true; // Whether to use VS or native scroll for all animations
     this.isMobile = globalStorage.isMobile;
 
-    if (this.isMobile || globalStorage.isFirefox) {
+    if (this.isMobile || globalStorage.isFirefox) { // Both mobile and FF perform much better without VS
       this.isVS = false;
     }
 
     this.bindMethods();
 
     gsap.defaults({
-      ease: "Linear.easeNone"
+      ease: "Linear.easeNone" // You want the ease of animations to be 1:1 with the scroll of the user's mouse if native (or the VS ease)
     });
 
     this.el = this.isVS ? domStorage.mainEl : document.body;
 
-    this.thisPagesTLs = [];
-    this.offsetVal = 0;
+    this.thisPagesTLs = []; // Array that will hold all the [data-entrance] timelines
+    this.offsetVal = 0; // Value used to check against so we don't play [data-entrance] timelines more than once
     this.body = document.body;
-    this.direction = 'untouched';
+    this.direction = 'untouched'; // Updated to either "up" or "down" in the run function
     this.transitioning = false;
 
     const {
-      sections = !this.isVS ? false : this.el.querySelectorAll('[data-smooth]'), // ONLY COLLECT DATA-SMOOTH SECTIONS IF isVS
-      dataFromElems = this.el.querySelectorAll('[data-from]'),
-      dataHeroFromElems = document.querySelectorAll('[data-h-from]'), // DATA HERO FROM MATH IS A LITTLE DIFFERNT
-      heroMeasureEl = this.el.querySelector('.hero .measure-el'),
-      footerMeasureEl = document.querySelector('#footer .measure-el'),
-      scrollBasedElems = this.el.querySelectorAll('[data-entrance]'),
-      threshold = 200,
-      ease = 0.18,
+      sections = !this.isVS ? false : this.el.querySelectorAll('[data-smooth]'), // Only collect [data-smooth] sectoins if this.isVS
+      dataFromElems = this.el.querySelectorAll('[data-from]'), // Elements that transition between the values placed on the element in the markup
+      dataHeroFromElems = document.querySelectorAll('[data-h-from]'), // [data-h-from] math differs a little
+      heroMeasureEl = this.el.querySelector('.hero .measure-el'), // Use css to make the .measure-el within the hero whatever height you want. When it's gone, the animation is complete
+      footerMeasureEl = document.querySelector('#footer .measure-el'), // Same goes for the footer measure element
+      scrollBasedElems = this.el.querySelectorAll('[data-entrance]'), // Elements that have a certain entrance once, when scrolled into view
+      threshold = 200, // Default pixel distance for this.isVisible to say yes this element is visible. We only animate against elements that are visible
+      ease = 0.18, // VS ease
+      // PC users deserve some consideration too, generally scroll devices can vary greatly on PC and the scroll events emitted will be far less frequent/reliable for easing purposes,
+      // so we just jack it up since we'll be easing it anyways. Only used if VS is turned on
       mouseMultiplier = (["Win32", "Win64", "Windows", "WinCE"].indexOf(window.navigator.platform) !== -1 ? 0.6 : 0.25),
       preventTouch = true,
       passive = true,
-      // OUR EXAMPLE TOP SCROLL BAR
-      scrollIndicator = document.getElementById('scroll-progress')
+      scrollIndicator = document.getElementById('scroll-progress') // The progress bar on top. This is just an example of data collection and animation
     } = options;
 
-    this.dom = {
+    this.dom = { // Save values to this.dom so we can just destroy that on leave
       el: this.el,
       // namespace: this.namespace,
       sections: sections,
@@ -75,7 +76,7 @@ export class ScrollBasedAnims {
       max: 0
     };
 
-    if (this.isVS) {
+    if (this.isVS) { // If VS, instantiate the VS and bind inputs/textarea so you can press space without scrolling down while focused
       this.vs = new VirtualScroll({
         el: this.el,
         mouseMultiplier: mouseMultiplier,
@@ -98,7 +99,7 @@ export class ScrollBasedAnims {
 
     this.init();
 
-    if (globalStorage.windowWidth > 767) {
+    if (globalStorage.windowWidth > 767) { // I turn [data-entrance] animations off on mobile because I prefer a more simple mobile experience with just a few key animations, instead of many elements fading in, etc.
       let length = this.dom.scrollBasedElems.length;
       for (let i = 0; i < length; i++) {
         const entranceEl = this.dom.scrollBasedElems[i];
@@ -140,7 +141,7 @@ export class ScrollBasedAnims {
     this.on();
   }
 
-  on() {
+  on() { // Note how we take all measurements (getBounding & getCache) whether it's VS or not. Using native scroll we're still going to animate everything exactly the same in run()
     if (this.isVS) {
       this.dom.el.classList.add('is-vs');
       this.setStyles();
@@ -151,7 +152,7 @@ export class ScrollBasedAnims {
     this.requestAnimationFrame();
   }
 
-  setStyles() {
+  setStyles() { // Only called if isVS
     this.dom.el.style.position = 'fixed';
     this.dom.el.style.top = 0;
     this.dom.el.style.left = 0;
@@ -167,34 +168,39 @@ export class ScrollBasedAnims {
     this.data.target = Math.round(Math.min(Math.max(this.data.target, 0), this.data.max));
   }
 
-  run() {
+  run() { // The RAF engine
     if (this.state.resizing || this.transitioning) return;
 
-    if (this.isVS) {
+    if (this.isVS) { // If isVS, use those the simulated pageY values
 
       this.data.current += (this.data.target - this.data.current) * this.data.ease;
-      this.transformSections();
+      this.transformSections(); // If isVS, transform the [data-smooth] sections
+      // Notice in both cases, this.getDirection() is called inbetween setting this.data.current and this.data.last, so we can measure deltas and know if we're going up or down
       this.getDirection();
       this.data.last = this.data.current;
-    } else {
 
+    } else { // else if native scroll do everything the same except we're just setting this.data.current to be the literal window.scrollY
+             // checking the window.scrollY causes a reflow, but the performance of everything is so tight, that is okay :D
       this.data.current = window.scrollY;
-      if (this.data.current === this.data.last) {
+      if (this.data.current === this.data.last) { // Don't run the animation cycle if they haven't scrolled
         this.requestAnimationFrame();
         return;
       }
+      // Notice in both cases, this.getDirection() is called in between setting this.data.current and this.data.last, so we can measure deltas and know if we're going up or down
       this.getDirection();
       this.data.last = this.data.current;
     }
 
-    this.scrollProgress(); // example function built for dummy markup on home php/css file
+    this.scrollProgress(); // Example animation function that animates a progress bar
 
-    if (!globalStorage.reducedMotion) {
+    if (!globalStorage.reducedMotion) { // You need to make sure all elements have proper positioning if not animated, or remove this check
       this.checkScrollBasedLoadins();
       this.animateDataHeroFromElems();
       this.animateDataFromElems();
       this.animateFooterReveal();
     }
+    this.playPauseVideos();
+    // Do it all over again. Note that even for native scroll, we're running a RAF and not just relying on the scroll event to fire the run() function. It's much more reliable and smooth.
     this.requestAnimationFrame();
   }
 
@@ -210,6 +216,24 @@ export class ScrollBasedAnims {
     }
   }
 
+  playPauseVideos() {
+    if (this.direction === "untouched") return;
+    for (let i = 0; i < this.videosDataLength; i++) {
+      let data = this.videosData[i];
+      let { isVisible } = this.isVisible(data, 50)
+      if (isVisible) {
+        if (!data.playing) {
+          data.el.play();
+          data.playing = true;
+        }
+      } else if (!isVisible && data.playing) {
+        data.el.pause();
+        data.el.currentTime = 0;
+        data.playing = false;
+      }
+    }
+  }
+
   scrollProgress() {
     if (this.direction === "untouched" || !this.dom.scrollIndicator) { return }
 
@@ -218,7 +242,7 @@ export class ScrollBasedAnims {
     gsap.set(this.scrollProgressData.scrollBar, { scaleX: scrollProgress })
   }
 
-  getSections() {
+  getSections() { // [data-smooth] sections, which are only present if isVS
     if (!this.dom.sections) return;
     this.sections = [];
     let length = this.dom.sections.length;
@@ -233,7 +257,23 @@ export class ScrollBasedAnims {
     }
   }
 
-  getScrollBasedSections() {
+  getVideos() {
+    let playPauseVideos = document.querySelectorAll('.play-in-view')
+    this.videosData = []
+
+    for (let i = 0; i < playPauseVideos.length; i++) {
+      let bounds = playPauseVideos[i].getBoundingClientRect()
+      this.videosData.push({
+        el: playPauseVideos[i],
+        playing: false,
+        top: (bounds.top + this.data.current) > this.data.height ? (bounds.top + this.data.current) : this.data.height,
+        bottom: (bounds.bottom + this.data.current),
+      })
+    }
+    this.videosDataLength = this.videosData.length
+  }
+
+  getScrollBasedSections() { // [data-entrance] sections that animate once when they hit a certain threshold in the viewport
     if (!this.dom.scrollBasedElems || this.isMobile) return
     this.scrollBasedElems = []
     let length = this.dom.scrollBasedElems.length;
@@ -253,7 +293,7 @@ export class ScrollBasedAnims {
 
   }
 
-  getDataFromElems() {
+  getDataFromElems() { // [data-from] elements that animate forward and backward as you scroll up and down. Note you can optionally have [data-mobile-from] & [data-mobile-to] on your elements
     if (!this.dom.dataFromElems) return;
 
     this.dataFromElems = [];
@@ -298,7 +338,7 @@ export class ScrollBasedAnims {
 
   }
 
-  getHeroMeasureEl() {
+  getHeroMeasureEl() { // Measure the .measure-el within .hero so we know when the [data-h-from] element animations should be complete
     if (!this.dom.heroMeasureEl) return;
     const el = this.dom.heroMeasureEl;
     const bounds = el.getBoundingClientRect();
@@ -313,6 +353,9 @@ export class ScrollBasedAnims {
   }
 
   getFooterMeasureEl() {
+    // Same as the getHeroMeasureEl() but the math is again slightly different. Here we're determining when a bottom-of-the-screen element is 100% in.
+    // In the previous function we're gathering data so we can determine when an already-visible element is 100% out.
+    // In the next function we'll get the elements that use the elements 0-1 intersectRatio() to animate forward and backward as they pass through the viewport
     if (!this.dom.footerMeasureEl || this.isMobile) return;
     const el = this.dom.footerMeasureEl;
     const bounds = el.getBoundingClientRect();
@@ -476,16 +519,14 @@ export class ScrollBasedAnims {
     if (this.isVS) {
       this.getSections();
     }
-
+    this.getVideos();
     if (globalStorage.reducedMotion) { return; }
-
     this.getScrollBasedSections();
     this.getDataHeroFromElems();
     this.getDataFromElems();
     this.getHeroMeasureEl();
     this.getFooterMeasureEl();
     this.getScrollProgressData();
-    console.log(this.data)
   }
 
   getScrollProgressData() {
@@ -513,6 +554,12 @@ export class ScrollBasedAnims {
   }
 
   resize() {
+    // Okay so this is some shit. We either lock the body height and overflow so the omnibar can't collapse, or we do the below..
+    // Basically if we can assume it's just the omnibar collapsing, don't re-measure things and just keep measuring off the un-collapsed omnibar height. This allows for
+    // scroll based animations to continue smoothly during omnibar collapse.
+
+    // I haven't been able to animate the footer reveal properly without locking the body so you'll notice the footer reveal is currently only being done on desktop :(
+    // If you lock the body overflow so the body can't collapse you can remove the omnibar stuff from this function and animate an awesome footer reveal too, I wouldn't blame you.
     let omnibar = false;
     if (globalStorage.windowWidth === this.data.width && this.isMobile) {
       omnibar = true;
@@ -539,7 +586,7 @@ export class ScrollBasedAnims {
   }
 
   destroy() {
-    this.transitioning = true; // WE DESTROY THE CLASS ISNTANCE ON GLOBAL LEAVE
+    this.transitioning = true; // We destroy the class instance in the global onLeave function
 
     if (this.isVS) {
       this.vs.off(this.event);

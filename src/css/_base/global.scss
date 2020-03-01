@@ -119,8 +119,12 @@ section {
 
 // TOUCH DEVICE STYLES...
 // THINGS ARE GONNA GET PRETTY SPECIFIC HERE
-body {
+html {
     &.touch {
-
+        #footer {
+            h5 {
+                display: none;
+            }
+        }
     }
 }

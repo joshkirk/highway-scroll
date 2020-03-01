@@ -29,13 +29,12 @@
 
 .view-home {
   section {
-    height: calc(var(--vh, 1vh) * 100);
+    height: calc(var(--vhu, 1vh) * 100);
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     overflow: hidden;
-
     h1 {
       font-size: 180px;
       font-family: sans-serif;
@@ -48,6 +47,7 @@
       pointer-events: none;
       @include bp-767 {
         color: #ffffff;
+        font-size: 50px;
       }
     }
     .img-wrapper {

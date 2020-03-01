@@ -1,17 +1,17 @@
 import Highway from "@dogstudio/highway";
-import { homeSpecificFunc } from "./anims";
+import { aboutSpecificFunc } from "./anims";
 
 /*
     View Events for Highway
 
-	- Home Page
+	- About Page
     - Events are listed in their execution order
 -------------------------------------------------- */
-class HomeRenderer extends Highway.Renderer {
+class AboutRenderer extends Highway.Renderer {
 
 	onEnter() {
 		console.log("onEnter");
-		homeSpecificFunc()
+		aboutSpecificFunc();
 	}
 
 	onEnterCompleted() {
@@ -27,4 +27,4 @@ class HomeRenderer extends Highway.Renderer {
 	}
 }
 
-export default HomeRenderer;
+export default AboutRenderer;
