@@ -6,6 +6,8 @@ import { hasClass, getViewport, tracking } from "../_global/helpers";
 import { globalStorage } from "../_global/storage";
 import { globalEntrance, pageEntrance } from "../_global/anims";
 import { ScrollBasedAnims } from "../_classes/ScrollBasedAnims";
+import 'intersection-observer';
+import quicklink from "quicklink/dist/quicklink.mjs";
 
 /* --- Scroll variable --- */
 export let $scroll;
@@ -66,6 +68,12 @@ export const onReady = ()=>{
 	document.body.style.setProperty('--vhu', `${vh}px`); // viewport height updated
 
 	globalEvents(namespace);
+
+	if (namespace === "home") {
+		quicklink({urls:['/about']});
+	} else if (namespace === "about") {
+		quicklink({urls:['/']});
+	}
 };
 
 /* --- window.onload Function --- */

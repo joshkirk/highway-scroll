@@ -50,6 +50,7 @@
     "flickity": "^2.2.1",
     "form-serialize": "^0.7.2",
     "gsap": "^3.2.2",
+    "intersection-observer": "^0.7.0",
     "lodash.throttle": "^4.1.1",
     "moment": "^2.24.0",
     "quicklink": "^1.0.1",
