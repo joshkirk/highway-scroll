@@ -175,7 +175,7 @@ export class ScrollBasedAnims {
 
       this.data.current += (this.data.target - this.data.current) * this.data.ease;
       this.transformSections(); // If isVS, transform the [data-smooth] sections
-      // Notice in both cases, this.getDirection() is called inbetween setting this.data.current and this.data.last, so we can measure deltas and know if we're going up or down
+      // Notice in both cases, this.getDirection() is called in between setting this.data.current and this.data.last, so we can measure deltas and know if we're going up or down
       this.getDirection();
       this.data.last = this.data.current;
 
@@ -355,7 +355,7 @@ export class ScrollBasedAnims {
   getFooterMeasureEl() {
     // Same as the getHeroMeasureEl() but the math is again slightly different. Here we're determining when a bottom-of-the-screen element is 100% in.
     // In the previous function we're gathering data so we can determine when an already-visible element is 100% out.
-    // In the next function we'll get the elements that use the elements 0-1 intersectRatio() to animate forward and backward as they pass through the viewport
+    // In the next function we'll get the elements that use a 0-1 intersectRatio() to animate forward and backward as they pass through the viewport
     if (!this.dom.footerMeasureEl || this.isMobile) return;
     const el = this.dom.footerMeasureEl;
     const bounds = el.getBoundingClientRect();
@@ -553,17 +553,14 @@ export class ScrollBasedAnims {
     this.data.max = this.dom.el.offsetHeight - globalStorage.windowHeight;
   }
 
-  resize() {
+  resize(omnibar = false) {
     // Okay so this is some shit. We either lock the body height and overflow so the omnibar can't collapse, or we do the below..
     // Basically if we can assume it's just the omnibar collapsing, don't re-measure things and just keep measuring off the un-collapsed omnibar height. This allows for
     // scroll based animations to continue smoothly during omnibar collapse.
 
     // I haven't been able to animate the footer reveal properly without locking the body so you'll notice the footer reveal is currently only being done on desktop :(
     // If you lock the body overflow so the body can't collapse you can remove the omnibar stuff from this function and animate an awesome footer reveal too, I wouldn't blame you.
-    let omnibar = false;
-    if (globalStorage.windowWidth === this.data.width && this.isMobile) {
-      omnibar = true;
-    }
+
     this.state.resizing = true;
     if (!omnibar) {
       this.getCache();

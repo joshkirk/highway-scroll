@@ -75,15 +75,24 @@ export const onLoad = ()=>{
 
 /* --- window.onresize Function --- */
 export const onResize = ()=>{
+	let newWidth = getViewport().width;
+	let omnibar = false;
+	if (globalStorage.windowWidth === newWidth && globalStorage.isMobile) {
+		omnibar = true;
+	}
 
 	globalStorage.windowHeight = getViewport().height;
-	globalStorage.windowWidth = getViewport().width;
+	globalStorage.windowWidth = newWidth;
 
 	let vh = globalStorage.windowHeight * 0.01;
+	if (!omnibar) {
+		document.body.style.setProperty('--vh', `${vh}px`);
+	}
 
 	document.body.style.setProperty('--vhu', `${vh}px`);
 
-	$scroll.resize();
+
+	$scroll.resize(omnibar);
 };
 
 /*
