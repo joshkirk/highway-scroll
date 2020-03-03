@@ -62,7 +62,7 @@ const globalEvents = (namespace = null)=>{
 /* --- DOMContentLoaded Function --- */
 export const onReady = ()=>{
 	let namespace = document.querySelector('[data-router-view]').dataset.routerView;
-	let vh = getViewport().height * 0.01;
+	let vh = globalStorage.windowHeight * 0.01;
 
 	document.body.style.setProperty('--vh', `${vh}px`);
 	document.body.style.setProperty('--vhu', `${vh}px`); // viewport height updated
@@ -96,9 +96,7 @@ export const onResize = ()=>{
 	if (!omnibar) {
 		document.body.style.setProperty('--vh', `${vh}px`);
 	}
-
 	document.body.style.setProperty('--vhu', `${vh}px`);
-
 
 	$scroll.resize(omnibar);
 };

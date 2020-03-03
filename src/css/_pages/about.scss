@@ -6,7 +6,6 @@
         align-items: center;
         position: relative;
         overflow: hidden;
-
         h1 {
             font-size: 180px;
             font-family: sans-serif;
@@ -22,14 +21,23 @@
                 font-size: 50px;
             }
         }
-        .img-wrapper {
-            width: 70%;
+        .image-wrapper {
+            width: 35%;
             position: relative;
+            .ar-wrapper {
+                padding-bottom: 60%;
+            }
+            @include bp-767 {
+                width: 75%;
+            }
         }
         img {
-            width: auto;
-            height: 300px;
+            width: 100%;
+            height: 100%;
             z-index: 2;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
     }
     .scale-bg {

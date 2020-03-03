@@ -1,6 +1,10 @@
 		</div>
 	</main>
-
+  <footer data-smooth id="footer">
+    <div class="measure-el"></div>
+      <?php include("parts/footer-content.php"); ?>
+  </footer>
+</div>
 	<?php include("parts/global-scope.php"); ?>
 
 <!-- Deferred CSS -->

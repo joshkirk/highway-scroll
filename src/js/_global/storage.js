@@ -20,6 +20,7 @@ export const globalStorage = {
 export const domStorage = {
 	// "header": document.getElementById('header'),
 	"mainEl": document.getElementById('main'),
+	"containerEl": document.getElementById('container'),
 	"globalMask": document.getElementById('global-mask'),
 	"openMobileMenu": () => {},
 	"closeMobileMenu": () => {},

@@ -15,6 +15,6 @@
       <a href="/about">About</a>
     </div>
 	</header>
-
+<div id="container">
 	<main id="main" data-router-wrapper>
 

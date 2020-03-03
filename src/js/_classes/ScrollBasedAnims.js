@@ -17,7 +17,7 @@ export class ScrollBasedAnims {
       ease: "Linear.easeNone" // You want the ease of animations to be 1:1 with the scroll of the user's mouse if native (or the VS ease)
     });
 
-    this.el = this.isVS ? domStorage.mainEl : document.body;
+    this.el = this.isVS ? domStorage.containerEl : document.body;
 
     this.thisPagesTLs = []; // Array that will hold all the [data-entrance] timelines
     this.offsetVal = 0; // Value used to check against so we don't play [data-entrance] timelines more than once
@@ -69,6 +69,7 @@ export class ScrollBasedAnims {
       threshold: threshold,
       ease: ease,
       current: 0,
+      currentScrollY: 0,
       last: 0,
       target: 0,
       height: 0,
@@ -182,6 +183,7 @@ export class ScrollBasedAnims {
     } else { // else if native scroll do everything the same except we're just setting this.data.current to be the literal window.scrollY
              // checking the window.scrollY causes a reflow, but the performance of everything is so tight, that is okay :D
       this.data.current = window.scrollY;
+      this.data.currentScrollY = this.data.current;
       if (this.data.current === this.data.last) { // Don't run the animation cycle if they haven't scrolled
         this.requestAnimationFrame();
         return;
@@ -251,8 +253,8 @@ export class ScrollBasedAnims {
       el.style.transform = '';
       const bounds = el.getBoundingClientRect();
       this.sections.push({
-        top: (bounds.top + this.data.current),
-        bottom: (bounds.bottom + this.data.current)
+        top: (bounds.top + this.data.currentScrollY),
+        bottom: (bounds.bottom + this.data.currentScrollY)
       });
     }
   }
@@ -266,8 +268,8 @@ export class ScrollBasedAnims {
       this.videosData.push({
         el: playPauseVideos[i],
         playing: false,
-        top: (bounds.top + this.data.current) > this.data.height ? (bounds.top + this.data.current) : this.data.height,
-        bottom: (bounds.bottom + this.data.current),
+        top: (bounds.top + this.data.currentScrollY) > this.data.height ? (bounds.top + this.data.currentScrollY) : this.data.height,
+        bottom: (bounds.bottom + this.data.currentScrollY),
       })
     }
     this.videosDataLength = this.videosData.length
@@ -284,8 +286,8 @@ export class ScrollBasedAnims {
       this.scrollBasedElems.push({
         el: el,
         played: false,
-        top: (bounds.top + this.data.current) > this.data.height ? (bounds.top + this.data.current) : this.data.height,
-        bottom: (bounds.bottom + this.data.current),
+        top: (bounds.top + this.data.currentScrollY) > this.data.height ? (bounds.top + this.data.currentScrollY) : this.data.height,
+        bottom: (bounds.bottom + this.data.currentScrollY),
         height: (bounds.bottom - bounds.top),
         offset: globalStorage.windowWidth < 768 ? (el.dataset.offsetMobile * globalStorage.windowHeight) : (el.dataset.offset * globalStorage.windowHeight)
       })
@@ -303,6 +305,7 @@ export class ScrollBasedAnims {
     let length = this.dom.dataFromElems.length
     for (let i = 0; i < length; i++) {
       let el = this.dom.dataFromElems[i]
+
       let from, to, dur;
       const bounds = el.getBoundingClientRect()
       const tl = new gsap.timeline({ paused: true })
@@ -326,9 +329,10 @@ export class ScrollBasedAnims {
       this.dataFromElems.push({
         el: el,
         tl: tl,
-        top: (bounds.top + this.data.current) > this.data.height ? (bounds.top + this.data.current) : this.data.height,
-        bottom: (bounds.bottom + this.data.current),
+        top: (bounds.top + this.data.currentScrollY) > this.data.height ? (bounds.top + this.data.currentScrollY) : this.data.height,
+        bottom: (bounds.bottom + this.data.currentScrollY),
         height: bounds.bottom - bounds.top,
+        from: from,
         duration: dur,
         progress: {
           current: 0
@@ -343,8 +347,8 @@ export class ScrollBasedAnims {
     const el = this.dom.heroMeasureEl;
     const bounds = el.getBoundingClientRect();
     this.heroMeasureData = {
-      top: (bounds.top + this.data.current) > this.data.height ? (bounds.top + this.data.current) : this.data.height,
-      bottom: (bounds.bottom + this.data.current),
+      top: (bounds.top + this.data.currentScrollY) > this.data.height ? (bounds.top + this.data.currentScrollY) : this.data.height,
+      bottom: (bounds.bottom + this.data.currentScrollY),
       height: bounds.bottom - bounds.top,
       progress: {
         current: 0
@@ -364,8 +368,8 @@ export class ScrollBasedAnims {
         .fromTo("#footer h5", 1, { y: 200, rotation: 540, opacity: 0 }, { y: 0, rotation: 0, opacity: 1 });
 
     this.footerMeasureData = {
-      top: (bounds.top + this.data.current) > this.data.height ? (bounds.top + this.data.current) : this.data.height,
-      bottom: (bounds.bottom + this.data.current),
+      top: (bounds.top + this.data.currentScrollY) > this.data.height ? (bounds.top + this.data.currentScrollY) : this.data.height,
+      bottom: (bounds.bottom + this.data.currentScrollY),
       height: bounds.bottom - bounds.top,
       duration: (this.data.height / (bounds.bottom - bounds.top)).toFixed(2)
     };
@@ -426,7 +430,7 @@ export class ScrollBasedAnims {
     } else if (percentageThrough >= 1) {
       percentageThrough = 1;
     }
-    console.log(percentageThrough)
+    // console.log(percentageThrough)
     let length = this.dataHeroFromElems.length;
     for (let i = 0; i < length; i++) {
       let data = this.dataHeroFromElems[i]
@@ -489,6 +493,7 @@ export class ScrollBasedAnims {
 
   intersectRatio(data, top, bottom) {
     const start = top - this.data.height;
+
     if (start > 0) { return }
     const end = (this.data.height + bottom + data.height) * data.duration;
     data.progress.current = Math.abs(start / end);
@@ -550,7 +555,7 @@ export class ScrollBasedAnims {
 
   getBounding() {
     this.data.height = globalStorage.windowHeight;
-    this.data.max = this.dom.el.offsetHeight - globalStorage.windowHeight;
+    this.data.max = this.dom.el.getBoundingClientRect().height - this.data.height;
   }
 
   resize(omnibar = false) {
@@ -564,10 +569,10 @@ export class ScrollBasedAnims {
     this.state.resizing = true;
     if (!omnibar) {
       this.getCache();
+      if (this.isVS) {
+        this.transformSections();
+      }
       this.getBounding();
-    }
-    if (this.isVS) {
-      this.transformSections();
     }
     this.state.resizing = false;
   }
