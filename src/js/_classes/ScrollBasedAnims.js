@@ -329,8 +329,8 @@ export class ScrollBasedAnims {
       this.dataFromElems.push({
         el: el,
         tl: tl,
-        top: (bounds.top + this.data.currentScrollY) > this.data.height ? (bounds.top + this.data.currentScrollY) : this.data.height,
-        bottom: (bounds.bottom + this.data.currentScrollY),
+        top: (bounds.top + this.data.currentScrollY) > this.data.height ? (bounds.top + this.data.currentScrollY - (this.isMobile ? 40 : 0)) : this.data.height,
+        bottom: (bounds.bottom + this.data.currentScrollY - (this.isMobile ? 40 : 0)),
         height: bounds.bottom - bounds.top,
         from: from,
         duration: dur,
@@ -554,8 +554,8 @@ export class ScrollBasedAnims {
   }
 
   getBounding() {
-    this.data.height = globalStorage.windowHeight;
-    this.data.max = this.dom.el.getBoundingClientRect().height - this.data.height;
+    this.data.height = globalStorage.windowHeight + (this.isMobile ? 100 : 0);
+    this.data.max = (this.dom.el.getBoundingClientRect().height - this.data.height) + (this.isMobile ? 100 : 0);
   }
 
   resize(omnibar = false) {
