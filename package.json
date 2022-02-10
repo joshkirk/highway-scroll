@@ -27,7 +27,7 @@
     "generate-json-webpack-plugin": "^0.3.1",
     "glob": "^7.1.6",
     "mini-css-extract-plugin": "^0.4.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "optimize-css-assets-webpack-plugin": "^4.0.2",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.5",
