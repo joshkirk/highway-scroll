@@ -52,7 +52,7 @@
     "gsap": "^3.2.4",
     "intersection-observer": "^0.7.0",
     "lodash.throttle": "^4.1.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "quicklink": "^1.0.1",
     "virtual-scroll": "^1.5.2"
   },
